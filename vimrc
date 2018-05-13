@@ -6,7 +6,6 @@ set number
 set showcmd
 set incsearch
 set hlsearch
-:x
 
 "filetype off
 
@@ -29,7 +28,7 @@ call vundle#end()
 
 filetype plugin indent on
 set background=dark
-colorscheme jellybean
+colorscheme default
 set laststatus=2
 hi clear SignColumn
 let g:airline_detect_paste=1
