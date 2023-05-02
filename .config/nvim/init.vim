@@ -1,3 +1,32 @@
+" Plugins will be downloaded under the specified directory.
+call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
+
+" Declare the list of plugins.
+Plug 'preservim/nerdtree'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'darrikonn/vim-gofmt', { 'do': ':GoUpdateBinaries' }
+Plug 'voldikss/vim-floaterm'
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+
+" List ends here. Plugins become visible to Vim after this call.
+call plug#end()
+
+set tabstop=2
+set expandtab
+set shiftwidth=4
+filetype plugin indent on
+syntax on
+set number
+set relativenumber
+colorscheme catppuccin-mocha
+
+let g:go_fmt_autosave = 1
+
+let mapleader =" "
+
+nnoremap <Leader>f :FZF %:p:h<CR>
 nnoremap <Leader>t :FloatermNew <CR>
 nnoremap <Leader>r :FloatermToggle <CR>
 nnoremap <leader>n :NERDTreeFocus<CR>
@@ -15,7 +44,6 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 
 " " Copy to clipboard
@@ -30,6 +58,8 @@ nnoremap <leader>P "+P
 vnoremap <leader>p "+p
 vnoremap <leader>P "+P
 
+autocmd BufWritePre,FileWritePre *.go :GoFmt
+autocmd BufWritePre,FileWritePre *.go :GoImports
 
 lua << EOF
 require'nvim-treesitter.configs'.setup {
@@ -39,4 +69,3 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 EOF
-
