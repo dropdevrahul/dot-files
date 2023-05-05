@@ -3,12 +3,16 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 
 " Declare the list of plugins.
 Plug 'preservim/nerdtree'
+Plug 'dense-analysis/ale'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'darrikonn/vim-gofmt', { 'do': ':GoUpdateBinaries' }
 Plug 'voldikss/vim-floaterm'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+Plug 'vim-test/vim-test'
+
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
@@ -26,19 +30,20 @@ let g:go_fmt_autosave = 1
 
 let mapleader =" "
 
-nnoremap <Leader>f :FZF %:p:h<CR>
-nnoremap <Leader>t :FloatermNew <CR>
+nnoremap <Leader>F :FZF %:p:h<CR>
+nnoremap <Leader>f :Rg<CR>
+nnoremap <Leader>y :FloatermNew <CR>
 nnoremap <Leader>r :FloatermToggle <CR>
-nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <Leader>n :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
+nnoremap <Leader>h :ALEHover<CR>
 
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 
-nnoremap <silent> K :call ShowDocumentation()<CR>
 " GoTo code navigation
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -58,8 +63,14 @@ nnoremap <leader>P "+P
 vnoremap <leader>p "+p
 vnoremap <leader>P "+P
 
-autocmd BufWritePre,FileWritePre *.go :GoFmt
-autocmd BufWritePre,FileWritePre *.go :GoImports
+nmap <silent> <leader>t :TestNearest<CR>
+nmap <silent> <leader>T :TestFile<CR>
+nmap <silent> <leader>g :TestVisit<CR>
+
+" BufWritePre,FileWritePre *.go :GoFmt
+" BufWritePre,FileWritePre *.go :GoImports
+
+let g:ale_set_balloons = 1
 
 lua << EOF
 require'nvim-treesitter.configs'.setup {
