@@ -49,6 +49,8 @@ nnoremap <Leader>w :FloatermNext <CR><C-\><C-n>
 nnoremap <Leader>h :FloatermHide <CR><C-\><C-n>
 nnoremap <Leader>r :FloatermShow <CR><C-\><C-n>
 tnoremap <Esc><Esc> <C-\><c-n>
+map <tab> :bnext<cr>
+map <S-tab> :bprevious<cr>
 nmap <silent> <leader>t :TestNearest<CR>
 nmap <silent> <leader>T :TestFile<CR>
 nmap <silent> <leader>g :TestVisit<CR>
@@ -72,6 +74,13 @@ require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true
   },
+}
+require'telescope'.setup{
+pickers = {
+    find_files = {
+        hidden = true
+    }
+    }
 }
 require'telescope'.load_extension('coc')
 EOF
